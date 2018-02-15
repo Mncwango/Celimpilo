@@ -5,7 +5,7 @@
     ViewData.AddActivePage(ManageLeaveNavPages.EmployeesLeave);
 }
 
-<h2>EmployeesLeave</h2>
+<h2>Employees Leave</h2>
 <table class="table">
     <thead>
         <tr>
@@ -42,10 +42,26 @@
                 <td>@leave.ToDate</td>
                 <td>@leave.NumberOfDays (days)</td>
                 <td>@leave.LeaveStatus.Name</td>
-                <td>
-                    <a href="@Url.Action("UpdateLeave","ManageLeave",  new { leaveId = leave.Id, leaveStatusEnum = LeaveStatusEnum.Approved })">Approve</a>
-                    <a href="@Url.Action("UpdateLeave","ManageLeave",  new { leaveId = leave.Id, leaveStatusEnum = LeaveStatusEnum.Rejected })">Reject</a>
-                </td>
+
+                @switch (leave.StatusId)
+                {
+                    case (int)LeaveStatusEnum.Pending:
+                        <td>
+                            <a href="@Url.Action("UpdateLeave", "ManageLeave", new { leaveId = leave.Id, leaveStatusEnum = LeaveStatusEnum.Approved })">Approve</a>
+                            <a href="@Url.Action("UpdateLeave", "ManageLeave", new { leaveId = leave.Id, leaveStatusEnum = LeaveStatusEnum.Rejected })">Reject</a>
+                        </td>
+                        break;
+                    case (int)LeaveStatusEnum.Cancelled:
+                    <td></td>
+                        break;
+                    default:
+                        <td><a href="@Url.Action("UpdateLeave", "ManageLeave", new { leaveId = leave.Id, leaveStatusEnum = LeaveStatusEnum.Cancelled })">Cancel</a></td>
+                        break;
+
+
+                }
+
+
 
             </tr>
 

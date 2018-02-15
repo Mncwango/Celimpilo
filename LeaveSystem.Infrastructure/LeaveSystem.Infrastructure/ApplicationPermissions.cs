@@ -12,25 +12,15 @@ namespace LeaveSystem.Infrastructure
 
 
         public const string UsersPermissionGroupName = "Employee Permissions";
-        public static ApplicationPermission ViewUsers = new ApplicationPermission("View Employees", "users.view", UsersPermissionGroupName, "Permission to view other users account details");
-        public static ApplicationPermission ManageUsers = new ApplicationPermission("Manage Employees", "users.manage", UsersPermissionGroupName, "Permission to create, delete and modify other users account details");
-
-        public const string RolesPermissionGroupName = "Role Permissions";
-        public static ApplicationPermission ViewRoles = new ApplicationPermission("View Roles", "roles.view", RolesPermissionGroupName, "Permission to view available roles");
-        public static ApplicationPermission ManageRoles = new ApplicationPermission("Manage Roles", "roles.manage", RolesPermissionGroupName, "Permission to create, delete and modify roles");
-        public static ApplicationPermission AssignRoles = new ApplicationPermission("Assign Roles", "roles.assign", RolesPermissionGroupName, "Permission to assign roles to users");
-
+        public static ApplicationPermission ViewLeave = new ApplicationPermission("View Leave", "leave.view", UsersPermissionGroupName, "Permission to view leave details");
+        public static ApplicationPermission ManageLeave = new ApplicationPermission("Manage Leaves", "manage.leave", UsersPermissionGroupName, "Permission manage leave");
 
         static ApplicationPermissions()
         {
             List<ApplicationPermission> allPermissions = new List<ApplicationPermission>()
             {
-                ViewUsers,
-                ManageUsers,
-
-                ViewRoles,
-                ManageRoles,
-                AssignRoles
+                ViewLeave,
+                ManageLeave,
             };
 
             AllPermissions = allPermissions.AsReadOnly();
@@ -53,7 +43,7 @@ namespace LeaveSystem.Infrastructure
 
         public static string[] GetAdministrativePermissionValues()
         {
-            return new string[] { ManageUsers, ManageRoles, AssignRoles };
+            return new string[] { ManageLeave,ViewLeave };
         }
     }
 
