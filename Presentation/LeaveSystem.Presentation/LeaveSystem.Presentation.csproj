@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Authorization\AssignRolesAuthorizationHandler.cs" />
+    <Compile Remove="Authorization\AssignRolesAuthorizationRequirement.cs" />
+    <Compile Remove="Authorization\ManageUserAuthorizationHandler.cs" />
+    <Compile Remove="Authorization\UserAccountAuthorizationRequirement.cs" />
+    <Compile Remove="Authorization\ViewRoleAuthorizationRequirement.cs" />
+    <Compile Remove="Authorization\ViewUserAuthorizationHandler.cs" />
     <Compile Remove="Migrations\20180213232819_something.cs" />
     <Compile Remove="Migrations\20180213232819_something.Designer.cs" />
   </ItemGroup>

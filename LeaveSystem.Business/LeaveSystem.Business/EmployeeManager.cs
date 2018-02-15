@@ -105,43 +105,6 @@ namespace LeaveSystem.Business
             return Tuple.Create(true, new string[] { });
         }
 
-        public async Task<Tuple<bool, string[]>> UpdateUserAsync(Employee user)
-        {
-            return await UpdateUserAsync(user, null);
-        }
-
-        public async Task<Tuple<bool, string[]>> UpdateUserAsync(Employee user, IEnumerable<string> roles)
-        {
-            var result = await _employeeManager.UpdateAsync(user);
-            if (!result.Succeeded)
-                return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
-
-
-            if (roles != null)
-            {
-                var userRoles = await _employeeManager.GetRolesAsync(user);
-
-                var rolesToRemove = userRoles.Except(roles).ToArray();
-                var rolesToAdd = roles.Except(userRoles).Distinct().ToArray();
-
-                if (rolesToRemove.Any())
-                {
-                    result = await _employeeManager.RemoveFromRolesAsync(user, rolesToRemove);
-                    if (!result.Succeeded)
-                        return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
-                }
-
-                if (rolesToAdd.Any())
-                {
-                    result = await _employeeManager.AddToRolesAsync(user, rolesToAdd);
-                    if (!result.Succeeded)
-                        return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
-                }
-            }
-
-            return Tuple.Create(true, new string[] { });
-        }
-
         public async Task<Tuple<bool, string[]>> ResetPasswordAsync(Employee user, string newPassword)
         {
             string resetToken = await _employeeManager.GeneratePasswordResetTokenAsync(user);
@@ -162,38 +125,10 @@ namespace LeaveSystem.Business
             return Tuple.Create(true, new string[] { });
         }
 
-        public async Task<bool> CheckPasswordAsync(Employee user, string password)
-        {
-            if (!await _employeeManager.CheckPasswordAsync(user, password))
-            {
-                if (!_employeeManager.SupportsUserLockout)
-                    await _employeeManager.AccessFailedAsync(user);
-
-                return false;
-            }
-
-            return true;
-        }
-
-        private async Task<Tuple<bool, string[]>> DeleteUserAsync(string userId)
-        {
-            var user = await _employeeManager.FindByIdAsync(userId);
-
-            if (user != null)
-                return await DeleteUserAsync(user);
-
-            return Tuple.Create(true, new string[] { });
-        }
-
         private async Task<Tuple<bool, string[]>> DeleteUserAsync(Employee user)
         {
             var result = await _employeeManager.DeleteAsync(user);
             return Tuple.Create(result.Succeeded, result.Errors.Select(e => e.Description).ToArray());
-        }
-
-        public async Task<Role> GetRoleByIdAsync(string roleId)
-        {
-            return await _roleManager.FindByIdAsync(roleId);
         }
 
         public async Task<Role> GetRoleByNameAsync(string roleName)
@@ -228,16 +163,6 @@ namespace LeaveSystem.Business
                     return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
                 }
             }
-
-            return Tuple.Create(true, new string[] { });
-        }
-
-        private async Task<Tuple<bool, string[]>> DeleteRoleAsync(string roleName)
-        {
-            var role = await _roleManager.FindByNameAsync(roleName);
-
-            if (role != null)
-                return await DeleteRoleAsync(role);
 
             return Tuple.Create(true, new string[] { });
         }
