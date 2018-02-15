@@ -23,6 +23,8 @@ x64/
 **/packages/*
 **/bin/**
 **/obj/**
+**/Debug/**
+**/bin/Debug/netcoreapp2.0/**
 # except build/, which is used as an MSBuild target.
 !**/packages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
