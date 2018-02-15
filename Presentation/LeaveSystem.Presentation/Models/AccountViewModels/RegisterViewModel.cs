@@ -15,6 +15,10 @@ namespace LeaveSystem.Presentation.Models.AccountViewModels
         [Display(Name ="Last Name")]
         public string LastName { get; set; }
 
+        [Required]
+        [Display(Name ="Employee Number")]
+        public string EmployeeNumber { get; set; }
+
         [DataType(DataType.PhoneNumber)]
         [Display(Name ="Phone Number")]
         public string CellPhoneNumber { get; set; }

@@ -63,7 +63,7 @@ namespace LeaveSystem.Presentation
                 await CreateEmployeeWithManagerAsync("employee", "Password.1", "Inbuilt ", "Standard employee", "employee@company1.com", "+1 (123) 000-0001", "manager@company1.com", new string[] { employeeRoleName });
 
             }
-            if(!await _context.LeaveStatus.AnyAsync())
+            if (!await _context.LeaveStatus.AnyAsync())
             {
                 var leaveStatus = new List<LeaveStatus>()
                 {
@@ -86,6 +86,15 @@ namespace LeaveSystem.Presentation
                 };
                 CreateLeaveStatus(leaveStatus);
             }
+            if(!await _context.PublicHoliday.AnyAsync())
+            {
+                var publicHoliday = GetPublicHolidays();
+                foreach (var item in publicHoliday)
+                {
+                    _unitOfWork.PublicHolidays.Add(item);
+                    _unitOfWork.Save();
+                }
+            }
         }
 
 
@@ -103,7 +112,7 @@ namespace LeaveSystem.Presentation
             }
         }
 
-        private async Task<Employee> CreateUserAsync(string userName, string password, string firstName,string lastName, string email, string phoneNumber, string[] roles)
+        private async Task<Employee> CreateUserAsync(string userName, string password, string firstName, string lastName, string email, string phoneNumber, string[] roles)
         {
             Employee applicationUser = new Employee
             {
@@ -126,11 +135,11 @@ namespace LeaveSystem.Presentation
 
             return applicationUser;
         }
-        private async Task CreateEmployeeWithManagerAsync(string userName, string password, string firstName, string lastName, string email, string phoneNumber,string managerEmail,string[] roles)
+        private async Task CreateEmployeeWithManagerAsync(string userName, string password, string firstName, string lastName, string email, string phoneNumber, string managerEmail, string[] roles)
         {
             //get the manager id
-            var manager =  _employeeManager.GetEmployeeByEmail(managerEmail);
-            if(manager != null)
+            var manager = _employeeManager.GetEmployeeByEmail(managerEmail);
+            if (manager != null)
             {
                 Employee applicationUser = new Employee
                 {
@@ -151,7 +160,7 @@ namespace LeaveSystem.Presentation
                     throw new Exception($"Seeding \"{userName}\" user failed. Errors: {string.Join(Environment.NewLine, result.Item2)}");
 
             }
-            
+
         }
         private void CreateLeaveStatus(List<LeaveStatus> leaveStatus)
         {
@@ -160,6 +169,71 @@ namespace LeaveSystem.Presentation
                 _unitOfWork.LeaveStatus.Add(item);
                 _unitOfWork.Save();
             }
+        }
+
+        private List<PublicHoliday> GetPublicHolidays()
+        {
+            List<PublicHoliday> publicHolidays = new List<PublicHoliday>()
+            {
+                new PublicHoliday()
+                {
+                    Date = new DateTime(2018,1,1).Date,
+                    Name = "New Year's Day"
+                },
+                 new PublicHoliday()
+                {
+                    Date = new DateTime(2018,3,21).Date,
+                    Name = "Human Right's Day"
+                },
+                  new PublicHoliday()
+                {
+                    Date = new DateTime(2018,3,30).Date,
+                    Name = "Good Friday"
+                },
+                   new PublicHoliday()
+                {
+                    Date = new DateTime(2018,4,2).Date,
+                    Name = "Family Day"
+                },
+                    new PublicHoliday()
+                {
+                    Date = new DateTime(2018,4,27).Date,
+                    Name = "Freedom Day"
+                },
+                        new PublicHoliday()
+                {
+                    Date = new DateTime(2018,5,1).Date,
+                    Name = "Labour Day"
+                },
+                            new PublicHoliday()
+                {
+                    Date = new DateTime(2018,8,9).Date,
+                    Name = "National Womans Day"
+                },
+                  new PublicHoliday()
+                {
+                    Date = new DateTime(2018,9,24).Date,
+                    Name = "Heritage Day"
+                },
+                      new PublicHoliday()
+                {
+                    Date = new DateTime(2018,12,16).Date,
+                    Name = "Day of Reconciliation"
+                },
+                    new PublicHoliday()
+                {
+                    Date = new DateTime(2018,12,25).Date,
+                    Name = "Christmas Day"
+                },
+                        new PublicHoliday()
+                {
+                    Date = new DateTime(2018,12,26).Date,
+                    Name = "Day of Good Will"
+                },
+            };
+            return publicHolidays;
+
+
         }
     }
 }

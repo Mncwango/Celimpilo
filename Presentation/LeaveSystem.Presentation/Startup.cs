@@ -42,32 +42,11 @@ namespace LeaveSystem.Presentation
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IEmployeeManager, EmployeeManager>();
             services.AddScoped<ILeaveManager, LeaveManager>();
+            services.AddScoped<IPublicHolidaysManager,PublicHolidaysManager>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
             Mapper.Initialize(cfg => cfg.AddProfile<AutoMapperProfile>());
-
-            //services.Configure<IdentityOptions>(options =>
-            //{
-            //    // User settings
-            //    options.User.RequireUniqueEmail = true;
-
-
-            //    options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
-            //    options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
-            //    options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
-            //});
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy(Authorization.Policies.ViewAllUsersPolicy, policy => policy.RequireClaim(CustomClaimTypes.Permission, AppPermissions.ViewUsers));
-            //    options.AddPolicy(Authorization.Policies.ManageAllUsersPolicy, policy => policy.RequireClaim(CustomClaimTypes.Permission, AppPermissions.ManageUsers));
-
-            //    options.AddPolicy(Authorization.Policies.ViewAllRolesPolicy, policy => policy.RequireClaim(CustomClaimTypes.Permission, AppPermissions.ViewRoles));
-            //    options.AddPolicy(Authorization.Policies.ViewRoleByRoleNamePolicy, policy => policy.Requirements.Add(new ViewRoleAuthorizationRequirement()));
-            //    options.AddPolicy(Authorization.Policies.ManageAllRolesPolicy, policy => policy.RequireClaim(CustomClaimTypes.Permission, AppPermissions.ManageRoles));
-
-            //    options.AddPolicy(Authorization.Policies.AssignAllowedRolesPolicy, policy => policy.Requirements.Add(new AssignRolesAuthorizationRequirement()));
-            //});
 
             services.AddMvc();
             services.AddMvcGrid();

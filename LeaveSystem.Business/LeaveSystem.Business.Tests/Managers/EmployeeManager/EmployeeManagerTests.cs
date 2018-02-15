@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using LeaveSystem.Business;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace LeaveSystem.Business.Tests.Managers.EmployeeManager
 {
@@ -37,6 +38,7 @@ namespace LeaveSystem.Business.Tests.Managers.EmployeeManager
                 CreatedDate = DateTime.Now.Date
             };
         }
+
         private List<Employee> GetListOfMockedEmployees()
         {
             return new List<Employee>()
@@ -158,19 +160,73 @@ namespace LeaveSystem.Business.Tests.Managers.EmployeeManager
             _userStoreMock.Setup(x => x.FindByNameAsync(It.IsAny<string>(), It.IsAny<System.Threading.CancellationToken>()))
                 .Returns(Task.FromResult(expectedEmployee));
             var manager = new LeaveSystem.Business.EmployeeManager(_employeeManager, _roleManager, uowMock.Object);
-            var results =await manager.GetUserByUserNameAsync("admin@company1.com");
+            var results = await manager.GetUserByUserNameAsync("admin@company1.com");
             Assert.AreEqual(expectedEmployee, results);
-            
+
         }
         [Test]
-        public async Task ShouldGetRolesForGivenEmployee()
+        public void ShouldGetRolesForGivenEmployee()
         {
-            //IList<string> roles = new List<string> {"administrator" };
-            //_userRoleStoreMock.Setup(x => x.GetRolesAsync(It.IsAny<Employee>(), It.IsAny<System.Threading.CancellationToken>()))
-            //    .Returns(Task.FromResult(roles));
-            //var manager = new LeaveSystem.Business.EmployeeManager(_employeeManager, _roleManager, uowMock.Object);
-            //var results = await manager.GetUserRolesAsync(GetMockEmployee());
-            //Assert.AreEqual(roles, results);
+            var employeeRole = new IdentityUserRole<string>()
+            {
+                RoleId = id,
+                UserId = id
+            };
+            var role = new Role()
+            {
+                Id = id,
+                Name = "administrator"
+            };
+
+            List<string> roles = new List<string> { "administrator" };
+
+            uowMock.Setup(x => x.EmployeeRoles.GetWhere(It.IsAny<Expression<Func<IdentityUserRole<string>, bool>>>()))
+                .Returns(new List<IdentityUserRole<string>>() { employeeRole }.AsQueryable());
+
+            uowMock.Setup(x => x.Roles.GetWhere(It.IsAny<Expression<Func<Role, bool>>>()))
+                .Returns(new List<Role>() { role }.AsQueryable());
+
+            var manager = new LeaveSystem.Business.EmployeeManager(_employeeManager, _roleManager, uowMock.Object);
+            var results = manager.GetEmployeeRoles(GetMockEmployee());
+            Assert.AreEqual(roles, results);
+        }
+
+        [Test]
+        public void ShouldGetEmployeeAndRolesForGivenEmployeeId()
+        {
+            var userRole = new IdentityUserRole<string>
+            {
+                RoleId = id,
+                UserId = id
+            };
+            var role = new Role
+            {
+                Id = id,
+                Name = "administrator"
+            };
+            var expectedRoles = new string[] { "administrator" };
+            var employee = GetMockEmployee();
+            employee.Roles = new List<IdentityUserRole<string>>() { userRole };
+            uowMock.Setup(x => x.Employees.GetAllIncluding(It.IsAny<Expression<Func<Employee, bool>>>(), It.IsAny<Expression<Func<Employee, object>>>()))
+                .Returns(new List<Employee> { employee }.AsQueryable());
+
+            uowMock.Setup(x => x.Roles.GetWhere(It.IsAny<Expression<Func<Role, bool>>>())).Returns(new List<Role> { role }.AsQueryable());
+            var manager = new LeaveSystem.Business.EmployeeManager(_employeeManager, _roleManager, uowMock.Object);
+            var results = manager.GetUserAndRolesAsync(id);
+            Assert.AreEqual(expectedRoles, results.Item2);
+            Assert.AreEqual(employee, results.Item1);
+
+        }
+
+        [Test]
+        public void ShouldReturnNullWhenGivenEmployeeIdDoesntExist()
+        {
+            uowMock.Setup(x => x.Employees.GetAllIncluding(It.IsAny<Expression<Func<Employee, bool>>>(), It.IsAny<Expression<Func<Employee, object>>>()))
+                .Returns(new List<Employee>().AsQueryable());
+            var manager = new LeaveSystem.Business.EmployeeManager(_employeeManager, _roleManager, uowMock.Object);
+            var results = manager.GetUserAndRolesAsync(id);
+            Assert.AreEqual(null, results);
+
         }
     }
 }

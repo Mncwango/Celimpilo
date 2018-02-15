@@ -8,11 +8,13 @@ using LeaveSystem.Business.Interfaces;
 using LeaveSystem.Data.Model;
 using LeaveSystem.Presentation.Controllers.Base;
 using LeaveSystem.Presentation.Models.ManageLeaveViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LeaveSystem.Presentation.Controllers
 {
+    [Authorize(Roles ="manager,employee")]
     public class LeaveController : BaseController
     {
         private readonly ILeaveManager leaveManager;
@@ -35,6 +37,7 @@ namespace LeaveSystem.Presentation.Controllers
         {
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddLeave(CreateLeaveViewModel leaveViewModel)

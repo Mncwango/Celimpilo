@@ -19,14 +19,8 @@ namespace LeaveSystem.Presentation.Models.ManageLeaveViewModels
         public int StatusId { get; set; }
         public string EmployeeId { get; set; }
         [Display(Name = "Number of days")]
-        public int NumberOfDays
-        {
-            get
-            {
-                var number = (ToDate - FromDate).Days;
-                return number;
-            }
-        }
+        public int NumberOfDays { get; set; }
+       
         public LeaveStatusViewModel LeaveStatus { get; set; }
         public EmployeeViewModel employee { get; set; }
     }

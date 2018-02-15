@@ -13,5 +13,6 @@ namespace LeaveSystem.Data.Uow
         IPublicHolidayRepository PublicHolidays { get; }
         IEmployeeRepository Employees { get; }
         IRoleRepository Roles { get; }
+        IEmployeeRolesRepository EmployeeRoles { get; }
     }
 }

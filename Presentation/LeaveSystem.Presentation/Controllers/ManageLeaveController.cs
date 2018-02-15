@@ -27,35 +27,42 @@ namespace LeaveSystem.Presentation.Controllers
             _employeeManager = employeeManager;
         }
 
+        [Authorize(Roles ="manager,employee")]
         public IActionResult Index()
         {
             var leaves = leaveManager.GetLeaveByEmployeeId(currentEmployee.Id).ToList();
             var results = Mapper.Map<List<Leave>, List<LeaveViewModel>>(leaves);
             return View(results);
         }
+
+        [Authorize(Roles = "manager,employee")]
         public IActionResult MyLeaves()
         {
             return View();
         }
+
+        [HttpGet]
+        [Authorize(Roles ="manager")]
         public IActionResult EmployeesLeave()
         {
             var leaves = leaveManager.GetManagerEmployeesLeaves(currentEmployee.Id).ToList();
             var results = Mapper.Map<List<Leave>, List<LeaveViewModel>>(leaves);
             return View(results);
         }
+
+        [HttpGet]
         public IActionResult LeaveDetails(int LeaveId)
         {
             return View();
         }
+
         [HttpGet]
+        [Authorize(Roles ="manager")]
         public IActionResult UpdateLeave(int leaveId,LeaveStatusEnum leaveStatusEnum)
         {
-            leaveManager.UpdateLeave(leaveId, leaveStatusEnum);
+            leaveManager.UpdateLeaveStatus(leaveId, leaveStatusEnum);
             return RedirectToAction("EmployeesLeave");
         }
-        public IActionResult RejectLeave(LeaveViewModel leave)
-        {
-            return View();
-        }
+
     }
 }

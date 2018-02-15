@@ -11,9 +11,10 @@ using System;
 namespace LeaveSystem.Presentation.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180215084239_added_New_Columns")]
+    partial class added_New_Columns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,8 +39,6 @@ namespace LeaveSystem.Presentation.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("EmployeeNumber");
-
                     b.Property<string>("FirstName");
 
                     b.Property<bool>("IsEnabled");
@@ -57,6 +56,8 @@ namespace LeaveSystem.Presentation.Migrations
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256);
+
+                    b.Property<string>("Number");
 
                     b.Property<string>("PasswordHash");
 

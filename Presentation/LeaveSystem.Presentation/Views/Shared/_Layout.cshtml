@@ -41,8 +41,13 @@
                     <ul class="nav navbar-nav">
                         @if (User.IsInRole("manager"))
                         {
-                        <li><a asp-area="" asp-controller="ManageLeave" asp-action="Index">Manage Leaves</a></li>
-                        <li><a asp-area="" asp-controller="Register" asp-action="Register">Register Employee</a></li>
+                            <li><a asp-area="" asp-controller="ManageLeave" asp-action="Index">Manage Leaves</a></li>
+                            <li><a asp-area="" asp-controller="Account" asp-action="Register">Register Employee</a></li>
+                        }
+                        @if (User.IsInRole("administrator"))
+                        {
+                            <li><a asp-area="" asp-controller="Account" asp-action="Register">Register Manager</a></li>
+
                         }
                         <li><a asp-area="" asp-controller="Leave" asp-action="Index">Leave</a></li>
                     </ul>
