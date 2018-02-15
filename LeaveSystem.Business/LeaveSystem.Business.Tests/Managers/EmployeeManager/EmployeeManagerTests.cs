@@ -228,5 +228,34 @@ namespace LeaveSystem.Business.Tests.Managers.EmployeeManager
             Assert.AreEqual(null, results);
 
         }
+        [Test]
+        public async Task ShouldCreateEmployeeAndAssignRolesAsync()
+        {
+            //IdentityResult result = IdentityResult.Success;
+            //var identityResults = new IdentityResult();
+            //identityResults.Succeeded = true;
+            //IdentityResult.Success = true;
+            _userStoreMock.Setup(x => x.CreateAsync(It.IsAny<Employee>(), It.IsAny<System.Threading.CancellationToken>()))
+                .Returns(Task.FromResult(IdentityResult.Success));
+
+            _userStoreMock.Setup(x => x.FindByNameAsync(It.IsAny<string>(), It.IsAny<System.Threading.CancellationToken>()))
+                 .Returns(Task.FromResult(GetMockEmployee()));
+            employeeManagerMock.Setup(x => x.AddToRoleAsync(It.IsAny<Employee>(), It.IsAny<string>()))
+                .Returns(Task.FromResult(IdentityResult.Success));
+            var manager = new LeaveSystem.Business.EmployeeManager(_employeeManager, _roleManager, uowMock.Object);
+           // var results =await manager.CreateUserAsync(GetMockEmployee(), new string[] { "administrator" }, "P@ssword.1");
+
+        }
+        [Test]
+        public async Task ShouldResertEmployeesPasswordAsync()
+        {
+           employeeManagerMock.Setup(x =>  x.ResetPasswordAsync(It.IsAny<Employee>(), It.IsAny<string>(),It.IsAny<string>()))
+                .Returns(Task.FromResult(IdentityResult.Success));
+            employeeManagerMock.Setup(x => x.GeneratePasswordResetTokenAsync(It.IsAny<Employee>()))
+            .Returns(Task.FromResult(Guid.NewGuid().ToString()));
+            var manager = new LeaveSystem.Business.EmployeeManager(_employeeManager, _roleManager, uowMock.Object);
+           // var results =await manager.ResetPasswordAsync(GetMockEmployee(), "Password.1");
+            //,It.IsAny<IEnumerable<string>>()))
+        }
     }
 }
