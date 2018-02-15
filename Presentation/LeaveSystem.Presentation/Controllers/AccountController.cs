@@ -63,13 +63,13 @@ namespace LeaveSystem.Presentation.Controllers
             if (ModelState.IsValid)
             {
 
-                var employee =  _userManager.GetEmployeeByEmail(model.Email);
+                var employee = _userManager.GetEmployeeByEmail(model.Email);
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(employee.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    
+
                     _logger.LogInformation("User logged in.");
                     return RedirectToLocal(returnUrl);
                 }
@@ -112,16 +112,21 @@ namespace LeaveSystem.Presentation.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+
             if (ModelState.IsValid)
             {
                 var employee = Mapper.Map<RegisterViewModel, Employee>(model);
-                
-                var result = await _userManager.CreateUserAsync(employee, new string[] { "employee" },model.Password);
+                var IsAdministrator = User.IsInRole("administrator");
+                var IsManager = User.IsInRole("manager");
+                var roleName = IsAdministrator ? "manager" : "employee";
+                if (IsManager)
+                {
+                    var manager = await _userManager.GetUserByUserNameAsync(User.Identity.Name);
+                    employee.ManagerId = manager.Id;
+                }
+                var result = await _userManager.CreateUserAsync(employee, new string[] { roleName }, model.Password);
                 if (result.Item1)
                 {
-                    _logger.LogInformation("User created a new account with password.");
-
-                    await _signInManager.SignInAsync(employee, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
                     return RedirectToLocal(returnUrl);
                 }

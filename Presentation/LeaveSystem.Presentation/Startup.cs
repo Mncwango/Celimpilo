@@ -42,6 +42,7 @@ namespace LeaveSystem.Presentation
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IEmployeeManager, EmployeeManager>();
             services.AddScoped<ILeaveManager, LeaveManager>();
+            services.AddScoped<IPublicHolidaysManager,PublicHolidaysManager>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();

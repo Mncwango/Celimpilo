@@ -39,10 +39,11 @@
                     @Html.DisplayFor(modelItem => item.Reason)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FromDate)
+                    @item.FromDate.ToString("dd MMM yyyy")
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ToDate)
+                    @*@Html.DisplayFor(modelItem => item.ToDate)*@
+                    @item.ToDate.ToString("dd MMM yyyy")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NumberOfDays) Day(s)

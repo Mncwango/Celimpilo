@@ -11,7 +11,7 @@ namespace LeaveSystem.Business.Interfaces
         IEnumerable<Leave> GetManagerEmployeesLeaves(string ManagerId);
         IEnumerable<Leave> GetLeaveByEmployeeId(string EmployeeId);
         int AddLeave(Leave leave);
-        int UpdateLeave(int leaveId, LeaveStatusEnum leaveStatusEnum);
+        int UpdateLeaveStatus(int leaveId, LeaveStatusEnum leaveStatusEnum);
         Leave GetLeaveById(int leaveId);
         int UpdateLeave(Leave leave);
     }

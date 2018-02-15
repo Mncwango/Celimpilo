@@ -9,7 +9,7 @@ namespace LeaveSystem.Data.Model
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Number { get; set; }
+        public string EmployeeNumber { get; set; }
         public string CellPhoneNumber { get; set; }
         public bool IsEnabled { get; set; }
         public bool IsLockedOut => this.LockoutEnabled && this.LockoutEnd >= DateTimeOffset.UtcNow;

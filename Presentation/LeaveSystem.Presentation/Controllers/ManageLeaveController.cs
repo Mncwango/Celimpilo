@@ -50,7 +50,7 @@ namespace LeaveSystem.Presentation.Controllers
         [HttpGet]
         public IActionResult UpdateLeave(int leaveId,LeaveStatusEnum leaveStatusEnum)
         {
-            leaveManager.UpdateLeave(leaveId, leaveStatusEnum);
+            leaveManager.UpdateLeaveStatus(leaveId, leaveStatusEnum);
             return RedirectToAction("EmployeesLeave");
         }
         public IActionResult RejectLeave(LeaveViewModel leave)

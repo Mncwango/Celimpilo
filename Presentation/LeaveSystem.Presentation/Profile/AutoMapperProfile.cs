@@ -30,7 +30,7 @@ namespace LeaveSystem.Presentation
                  .ForMember(x => x.ManagerId, v => v.Ignore())
                  .ForMember(x => x.NormalizedEmail, v => v.Ignore())
                  .ForMember(x => x.NormalizedUserName, v => v.Ignore())
-                 .ForMember(x => x.Number, v => v.Ignore())
+                 .ForMember(x => x.EmployeeNumber, v => v.Ignore())
                  .ForMember(x => x.PhoneNumber, v => v.Ignore())
                  .ForMember(x => x.PhoneNumberConfirmed, v => v.Ignore())
                  .ForMember(x => x.Roles, v => v.Ignore())

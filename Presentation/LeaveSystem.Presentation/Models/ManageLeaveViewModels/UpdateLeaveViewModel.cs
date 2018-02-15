@@ -22,6 +22,7 @@ namespace LeaveSystem.Presentation.Models.ManageLeaveViewModels
         public int StatusId { get; set; }
         public string EmployeeId { get; set; }
         public LeaveStatusViewModel LeaveStatus { get; set; }
+        public int NumberOfDays { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

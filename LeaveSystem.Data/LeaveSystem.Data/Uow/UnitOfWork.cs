@@ -54,6 +54,13 @@ namespace LeaveSystem.Data.Uow
                 return new RolesRepository(dbContext);
             }
         }
+        public IEmployeeRolesRepository EmployeeRoles
+        {
+            get
+            {
+                return new EmployeeRolesRepository(dbContext);
+            }
+        }
 
         public void Dispose()
         {
