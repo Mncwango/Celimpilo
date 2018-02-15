@@ -3,3 +3,12 @@
 ################################################################################
 
 /LeaveSystem.Infrastructure/LeaveSystem.Infrastructure/obj
+/LeaveSystem.Infrastructure/LeaveSystem.Infrastructure/bin/Debug/netcoreapp2.0
+/LeaveSystem.Data/LeaveSystem.Data.Model
+/LeaveSystem.Data/LeaveSystem.Data
+/LeaveSystem.Business/LeaveSystem.Business.Tests/obj
+/LeaveSystem.Business/LeaveSystem.Business.Tests/bin/Debug/netcoreapp2.0
+/Presentation/.vs/LeaveSystem.Presentation/v15/Server/sqlite3
+/Presentation/LeaveSystem.Presentation/bin/Debug/netcoreapp2.0
+/Presentation/LeaveSystem.Presentation/obj/Debug/netcoreapp2.0
+/Presentation/packages/EntityFramework.6.1.3
