@@ -21,6 +21,8 @@ x64/
 *.nupkg
 # The packages folder can be ignored because of Package Restore
 **/packages/*
+**/bin/**
+**/obj/**
 # except build/, which is used as an MSBuild target.
 !**/packages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
@@ -53,6 +55,8 @@ x64/
 *.pidb
 *.log
 *.scc
+*.dll
+*.suo
 
 # OS generated files #
 .DS_Store*
