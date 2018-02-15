@@ -32,7 +32,6 @@ namespace LeaveSystem.Business.Tests.Managers.EmployeeManager
                 LastName = "Administrator",
                 Email = "admin@company1.com",
                 PhoneNumber = "+1 (123) 000-0000",
-                CellPhoneNumber = "+1 (123) 000-0000",
                 EmailConfirmed = true,
                 IsEnabled = true,
                 CreatedDate = DateTime.Now.Date
@@ -50,7 +49,6 @@ namespace LeaveSystem.Business.Tests.Managers.EmployeeManager
                        LastName = "Administrator",
                        Email = "admin@company1.com",
                        PhoneNumber = "+1 (123) 000-0000",
-                       CellPhoneNumber = "+1 (123) 000-0000",
                        EmailConfirmed = true,
                        IsEnabled = true,
                        CreatedDate = DateTime.Now.Date
@@ -62,7 +60,6 @@ namespace LeaveSystem.Business.Tests.Managers.EmployeeManager
                    LastName = "Administrator",
                    Email = "employee@company1.com",
                    PhoneNumber = "+1 (123) 000-0000",
-                   CellPhoneNumber = "+1 (123) 000-0000",
                    EmailConfirmed = true,
                    IsEnabled = true,
                    CreatedDate = DateTime.Now.Date
@@ -83,7 +80,6 @@ namespace LeaveSystem.Business.Tests.Managers.EmployeeManager
                        LastName = "Administrator",
                        Email = "admin@company1.com",
                        PhoneNumber = "+1 (123) 000-0000",
-                       CellPhoneNumber = "+1 (123) 000-0000",
                        EmailConfirmed = true,
                        IsEnabled = true,
                        CreatedDate = DateTime.Now.Date
@@ -95,7 +91,6 @@ namespace LeaveSystem.Business.Tests.Managers.EmployeeManager
                    LastName = "Administrator",
                    Email = "employee@company1.com",
                    PhoneNumber = "+1 (123) 000-0000",
-                   CellPhoneNumber = "+1 (123) 000-0000",
                    EmailConfirmed = true,
                    IsEnabled = true,
                    CreatedDate = DateTime.Now.Date
@@ -108,7 +103,6 @@ namespace LeaveSystem.Business.Tests.Managers.EmployeeManager
                 LastName = "Administrator",
                 Email = "admin@company1.com",
                 PhoneNumber = "+1 (123) 000-0000",
-                CellPhoneNumber = "+1 (123) 000-0000",
                 EmailConfirmed = true,
                 IsEnabled = true,
                 CreatedDate = DateTime.Now.Date
@@ -140,7 +134,6 @@ namespace LeaveSystem.Business.Tests.Managers.EmployeeManager
                 LastName = "Administrator",
                 Email = "admin@company1.com",
                 PhoneNumber = "+1 (123) 000-0000",
-                CellPhoneNumber = "+1 (123) 000-0000",
                 EmailConfirmed = true,
                 IsEnabled = true,
                 CreatedDate = DateTime.Now.Date

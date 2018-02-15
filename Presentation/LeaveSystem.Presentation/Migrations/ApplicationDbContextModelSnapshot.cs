@@ -26,8 +26,6 @@ namespace LeaveSystem.Presentation.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("CellPhoneNumber");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 

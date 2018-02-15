@@ -39,8 +39,18 @@ namespace LeaveSystem.Business
                 var currentDay = fromDate.AddDays(day);
                 var publicHoliday = uow.PublicHolidays
                     .GetWhere(x => x.Date.Day == currentDay.Day && x.Date.Month == currentDay.Month).FirstOrDefault();
+                //is it a holiday
                 if (publicHoliday != null)
+                {
                     publicHolidaysList.Add(publicHoliday);
+                }
+                else
+                {
+                    //if not a holiday check if its a weekend
+                    var dayOfTheWeek = currentDay.DayOfWeek;
+                    if (dayOfTheWeek == DayOfWeek.Saturday || dayOfTheWeek == DayOfWeek.Sunday)
+                        publicHolidaysList.Add(new PublicHoliday() { Name = "Weekend" });
+                }
             }
             return publicHolidaysList;
         }

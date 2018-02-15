@@ -9,14 +9,21 @@
     <div class="col-md-8 col-md-offset-2">
         <h4>UpdateLeaveViewModel</h4>
         <hr />
+        @if (ViewData["error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                @ViewData["error"]
+            </div>
 
+        }
         <form asp-action="EditLeave">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @*<div class="form-group">
-            <label asp-for="Id" class="control-label"></label>
-            <input asp-for="Id" class="form-control" />
-            <span asp-validation-for="Id" class="text-danger"></span>
-        </div>*@
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>*@
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="StatusId" />
             <input type="hidden" asp-for="EmployeeId" />
@@ -36,10 +43,10 @@
                 <span asp-validation-for="ToDate" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-            <label asp-for="StatusId" class="control-label"></label>
-            <input asp-for="StatusId" class="form-control" />
-            <span asp-validation-for="StatusId" class="text-danger"></span>
-        </div>*@
+                    <label asp-for="StatusId" class="control-label"></label>
+                    <input asp-for="StatusId" class="form-control" />
+                    <span asp-validation-for="StatusId" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>

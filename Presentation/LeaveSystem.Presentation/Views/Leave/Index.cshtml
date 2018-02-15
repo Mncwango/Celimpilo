@@ -21,7 +21,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.ToDate)
                 </th>
-               
+
                 <th>
                     @Html.DisplayNameFor(model => model.NumberOfDays)
                 </th>
@@ -34,28 +34,33 @@
         <tbody>
             @foreach (var item in Model)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Reason)
-                </td>
-                <td>
-                    @item.FromDate.ToString("dd MMM yyyy")
-                </td>
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.ToDate)*@
-                    @item.ToDate.ToString("dd MMM yyyy")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumberOfDays) Day(s)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LeaveStatus.Name)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "EditLeave", new { leaveId =item.Id }) |
-                    @Html.ActionLink("Details", "LeaveDetails", new { leaveId = item.Id })
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Reason)
+                    </td>
+                    <td>
+                        @item.FromDate.ToString("dd MMM yyyy")
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.ToDate)*@
+                        @item.ToDate.ToString("dd MMM yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumberOfDays) Day(s)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LeaveStatus.Name)
+                    </td>
+
+                    <td>
+                        @if (item.StatusId == (int)LeaveStatusEnum.Pending)
+                        {
+                            @Html.ActionLink("Edit", "EditLeave", new { leaveId = item.Id }) 
+                            <span>|</span>
+                        }
+                        @Html.ActionLink("Details", "LeaveDetails", new { leaveId = item.Id })
+                    </td>
+                </tr>
             }
         </tbody>
     </table>

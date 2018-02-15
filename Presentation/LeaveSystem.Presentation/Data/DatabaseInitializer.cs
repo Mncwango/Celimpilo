@@ -121,7 +121,6 @@ namespace LeaveSystem.Presentation
                 LastName = lastName,
                 Email = email,
                 PhoneNumber = phoneNumber,
-                CellPhoneNumber = phoneNumber,
                 EmailConfirmed = true,
                 IsEnabled = true,
                 CreatedDate = DateTime.Now.Date

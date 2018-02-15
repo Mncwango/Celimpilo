@@ -6,6 +6,7 @@ using AutoMapper;
 using LeaveSystem.Business;
 using LeaveSystem.Business.Interfaces;
 using LeaveSystem.Data.Model;
+using LeaveSystem.Infrastructure;
 using LeaveSystem.Presentation.Controllers.Base;
 using LeaveSystem.Presentation.Models.ManageLeaveViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -63,6 +64,12 @@ namespace LeaveSystem.Presentation.Controllers
         {
             if (ModelState.IsValid)
             {
+                //can only update leave that is pending
+                if(model.StatusId != (int)LeaveStatusEnum.Pending)
+                {
+                   ViewData["error"]= "You can only update Leave Request that is on Pending Status";
+                    return View(model);
+                }
                 var leave = Mapper.Map<UpdateLeaveViewModel, Leave>(model);
                 var results = leaveManager.UpdateLeave(leave);
                 if (results > 0)
@@ -91,6 +98,14 @@ namespace LeaveSystem.Presentation.Controllers
             var leave = leaveManager.GetLeaveById(leaveId);
             var leaveModel = Mapper.Map<Leave, LeaveViewModel>(leave);
             return View(leaveModel);
+        }
+
+        private void AddErrors(IEnumerable<string> result)
+        {
+            foreach (var error in result)
+            {
+                ModelState.AddModelError(string.Empty, error);
+            }
         }
     }
 }
