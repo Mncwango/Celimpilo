@@ -61,6 +61,8 @@ namespace LeaveSystem.Presentation.Controllers
             {
 
                 var employee = _employeeManager.GetEmployeeByEmail(model.Email);
+                if (employee == null)
+                    return View(model);
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(employee.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
@@ -116,12 +118,13 @@ namespace LeaveSystem.Presentation.Controllers
                 var IsAdministrator = User.IsInRole("administrator");
                 var IsManager = User.IsInRole("manager");
                 var roleName = IsAdministrator ? "manager" : "employee";
+                
                 if (IsManager)
                 {
                     var manager = await _employeeManager.GetUserByUserNameAsync(User.Identity.Name);
                     employee.ManagerId = manager.Id;
                 }
-                var result = await _employeeManager.CreateUserAsync(employee, new string[] { roleName }, model.Password);
+                var result = await _employeeManager.CreateEmployeeAsync(employee, new string[] { roleName }, model.Password);
                 if (result.Item1)
                 {
                     _logger.LogInformation("User created a new account with password.");

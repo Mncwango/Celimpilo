@@ -6,6 +6,7 @@
 }
 
 <h2>Employees Leave</h2>
+@Html.Partial("_StatusMessage", ViewData["results"]);
 <table class="table">
     <thead>
         <tr>
@@ -38,8 +39,8 @@
             <tr>
                 <td>@_employeeManager.GetUserByIdAsync(leave.EmployeeId).Result.FirstName.ToString()</td>
                 <td>@leave.Reason</td>
-                <td>@leave.FromDate</td>
-                <td>@leave.ToDate</td>
+                <td>@leave.FromDate.ToString("dd MMM yyyy")</td>
+                <td>@leave.ToDate.ToString("dd MMM yyyy")</td>
                 <td>@leave.NumberOfDays (days)</td>
                 <td>@leave.LeaveStatus.Name</td>
 
@@ -52,7 +53,7 @@
                         </td>
                         break;
                     case (int)LeaveStatusEnum.Cancelled:
-                    <td></td>
+                        <td></td>
                         break;
                     default:
                         <td><a href="@Url.Action("UpdateLeave", "ManageLeave", new { leaveId = leave.Id, leaveStatusEnum = LeaveStatusEnum.Cancelled })">Cancel</a></td>

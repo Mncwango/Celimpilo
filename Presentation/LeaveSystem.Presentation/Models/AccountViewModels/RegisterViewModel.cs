@@ -10,6 +10,7 @@ namespace LeaveSystem.Presentation.Models.AccountViewModels
     {
         [Required]
         [Display(Name ="First Name")]
+        [DataType(DataType.Text)]
         public string FirstName { get; set; }
         [Required]
         [Display(Name ="Last Name")]
@@ -17,15 +18,18 @@ namespace LeaveSystem.Presentation.Models.AccountViewModels
 
         [Required]
         [Display(Name ="Employee Number")]
-        public string EmployeeNumber { get; set; }
+        [DisplayFormat(DataFormatString = "{0:####}", ApplyFormatInEditMode = true)]
+        public int EmployeeNumber { get; set; }
 
         [DataType(DataType.PhoneNumber)]
         [Display(Name ="Phone Number")]
+        [StringLength(10,ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 10)]
         public string CellPhoneNumber { get; set; }
 
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [Required]

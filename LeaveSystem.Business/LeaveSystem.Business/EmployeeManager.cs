@@ -44,8 +44,7 @@ namespace LeaveSystem.Business
 
         public Employee GetEmployeeByEmail(string email)
         {
-            return _unitOfWork.Employees.GetWhere(x => x.Email == email).FirstOrDefault();
-
+            return _employeeManager.FindByEmailAsync(email).Result;
         }
 
         public List<string> GetEmployeeRoles(Employee user)
@@ -76,29 +75,30 @@ namespace LeaveSystem.Business
             return Tuple.Create(user, roles);
         }
 
-        public async Task<Tuple<bool, string[]>> CreateUserAsync(Employee user, IEnumerable<string> roles, string password)
+        public async Task<Tuple<bool, string[]>> CreateEmployeeAsync(Employee employee, IEnumerable<string> roles, string password)
         {
-            user.UserName = user.FirstName;
-            var result = await _employeeManager.CreateAsync(user, password);
+            //construct a username
+            employee.UserName = employee.FirstName + employee.LastName + employee.EmployeeNumber;
+            var result = await _employeeManager.CreateAsync(employee, password);
             if (!result.Succeeded)
                 return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 
 
-            user = await _employeeManager.FindByNameAsync(user.UserName);
+            employee = await _employeeManager.FindByNameAsync(employee.UserName);
 
             try
             {
-                result = await _employeeManager.AddToRoleAsync(user, roles.FirstOrDefault());
+                result = await _employeeManager.AddToRolesAsync(employee, roles);
             }
             catch (Exception ex)
             {
-                await DeleteUserAsync(user);
+                await DeleteUserAsync(employee);
                 throw;
             }
 
             if (!result.Succeeded)
             {
-                await DeleteUserAsync(user);
+                await DeleteUserAsync(employee);
                 return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
             }
 

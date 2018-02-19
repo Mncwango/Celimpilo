@@ -21,33 +21,45 @@ namespace LeaveSystem.Presentation.Controllers
         private readonly ILeaveManager leaveManager;
         private readonly IEmployeeManager _employeeManager;
         public ManageLeaveController(ILeaveManager leaveManager, IEmployeeManager employeeManager)
-            : base(leaveManager,employeeManager)
+            : base(leaveManager, employeeManager)
         {
             this.leaveManager = leaveManager;
             _employeeManager = employeeManager;
         }
 
-        [Authorize(Roles ="manager,employee")]
+        [Authorize(Roles = "manager,employee")]
         public IActionResult Index()
         {
-            var leaves = leaveManager.GetLeaveByEmployeeId(currentEmployee.Id).ToList();
-            var results = Mapper.Map<List<Leave>, List<LeaveViewModel>>(leaves);
-            return View(results);
+            try
+            {
+                var leaves = leaveManager.GetLeaveByEmployeeId(currentEmployee.Id).ToList();
+                var results = Mapper.Map<List<Leave>, List<LeaveViewModel>>(leaves);
+                return View(results);
+            }
+            catch (Exception ex)
+            {
+
+                ViewData["results"] = "Error:" + ex.Message;
+                return View();
+            }
         }
 
-        [Authorize(Roles = "manager,employee")]
-        public IActionResult MyLeaves()
-        {
-            return View();
-        }
 
         [HttpGet]
-        [Authorize(Roles ="manager")]
+        [Authorize(Roles = "manager")]
         public IActionResult EmployeesLeave()
         {
-            var leaves = leaveManager.GetManagerEmployeesLeaves(currentEmployee.Id).ToList();
-            var results = Mapper.Map<List<Leave>, List<LeaveViewModel>>(leaves);
-            return View(results);
+            try
+            {
+                var leaves = leaveManager.GetManagerEmployeesLeaves(currentEmployee.Id).ToList();
+                var results = Mapper.Map<List<Leave>, List<LeaveViewModel>>(leaves);
+                return View(results);
+            }
+            catch (Exception ex)
+            {
+                ViewData["results"] = "Error:" + ex.Message;
+                return View();
+            }
         }
 
         [HttpGet]
@@ -57,11 +69,19 @@ namespace LeaveSystem.Presentation.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles ="manager")]
-        public IActionResult UpdateLeave(int leaveId,LeaveStatusEnum leaveStatusEnum)
+        [Authorize(Roles = "manager")]
+        public IActionResult UpdateLeave(int leaveId, LeaveStatusEnum leaveStatusEnum)
         {
-            leaveManager.UpdateLeaveStatus(leaveId, leaveStatusEnum);
-            return RedirectToAction("EmployeesLeave");
+            try
+            {
+                leaveManager.UpdateLeaveStatus(leaveId, leaveStatusEnum);
+                return RedirectToAction("EmployeesLeave");
+            }
+            catch (Exception ex)
+            {
+                ViewData["results"] = "Error:" + ex.Message;
+                return View();
+            }
         }
 
     }

@@ -32,7 +32,7 @@ namespace LeaveSystem.Presentation
         public void ConfigureServices(IServiceCollection services)
         {
                 services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("AzureDbConnection"), b => b.MigrationsAssembly("LeaveSystem.Presentation")));
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("LeaveSystem.Presentation")));
 
             services.AddIdentity<Employee, Role>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

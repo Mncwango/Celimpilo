@@ -12,7 +12,7 @@ namespace LeaveSystem.Business
     {
         Task<bool> HasPasswordAsync(Employee employee);
         Task<Tuple<bool, string[]>> CreateRoleAsync(Role role, IEnumerable<string> claims);
-        Task<Tuple<bool, string[]>> CreateUserAsync(Employee user, IEnumerable<string> roles, string password);
+        Task<Tuple<bool, string[]>> CreateEmployeeAsync(Employee user, IEnumerable<string> roles, string password);
         Task<Role> GetRoleByNameAsync(string roleName);
         Tuple<Employee, string[]> GetUserAndRolesAsync(string userId);
         Employee GetEmployeeByEmail(string email);

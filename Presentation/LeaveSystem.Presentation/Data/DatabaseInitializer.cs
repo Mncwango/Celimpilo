@@ -44,7 +44,8 @@ namespace LeaveSystem.Presentation
         }
         public async Task Seed()
         {
-            //await _context.Database.MigrateAsync().ConfigureAwait(false);
+
+            await _context.Database.MigrateAsync().ConfigureAwait(false);
 
             if (!await _context.Users.AnyAsync())
             {
@@ -57,10 +58,37 @@ namespace LeaveSystem.Presentation
                 await EnsureRoleAsync(employeeRoleName, "Default employee", new string[] { });
                 await EnsureRoleAsync(managerRoleName, "Default administrator", ApplicationPermissions.GetAllPermissionValues());
 
-                await CreateUserAsync("admin", "Password.1", "Inbuilt", "Administrator", "admin@company1.com", "+1 (123) 000-0000", new string[] { adminRoleName });
+                //System Admin
 
-                await CreateUserAsync("manager", "Password.1", "Inbuilt ", "manager", "manager@company1.com", "+1 (123) 000-0001", new string[] { managerRoleName });
-                await CreateEmployeeWithManagerAsync("employee", "Password.1", "Inbuilt ", "Standard employee", "employee@company1.com", "+1 (123) 000-0001", "manager@company1.com", new string[] { employeeRoleName });
+                await CreateEmployeeAsync("Password.1", 0000, "Inbuilt", "Administrator", "admin@company1.com", "+1 (123) 000-0000", new string[] { adminRoleName, managerRoleName, employeeRoleName });
+
+                //CEO
+                await CreateEmployeeAsync("Password.1", 0001, "Linda", "Jenkins", "lindan@acme.com", "+36 55 979 367", new string[] { managerRoleName });
+
+
+                //Management Team
+                await CreateEmployeeWithManagerAsync("Password.1", 0003, "Colin", "Horton", "colinhorton@amce.com", "+353 20 915 7545", "lindan@acme.com", new string[] { managerRoleName, employeeRoleName });
+                await CreateEmployeeWithManagerAsync("Password.1", 0002, "Milton", "Coleman", "miltoncoleman@amce.com", "+36 55 937 274", "lindan@acme.com", new string[] { employeeRoleName, managerRoleName });
+
+
+                //Dev Team
+                await CreateEmployeeWithManagerAsync("Password.1", 2005, "Ella", "Jefferson", "ellajefferson@acme.com", "+36 55 979 367", "colinhorton@amce.com", new string[] { employeeRoleName });
+                await CreateEmployeeWithManagerAsync("Password.1", 2006, "Earl", "Craig", "earlcraig@acme.com", "+353 20 916 5608", "colinhorton@amce.com", new string[] { employeeRoleName });
+                await CreateEmployeeWithManagerAsync("Password.1", 2008, "Marsha", "Murphy", "marshamurphy@acme.com", "+36 55 949 891", "colinhorton@amce.com", new string[] { employeeRoleName });
+                await CreateEmployeeWithManagerAsync("Password.1", 2009, "Luis", "Ortega", "luisortega@acme.com", "+353 20 917 1339", "colinhorton@amce.com", new string[] { employeeRoleName });
+                await CreateEmployeeWithManagerAsync("Password.1", 2010, "Faye", "Dennis", "fayedennis@acme.com", "", "colinhorton@amce.com", new string[] { employeeRoleName });
+                await CreateEmployeeWithManagerAsync("Password.1", 2012, "Amy", "Burns", "amyburns@acme.com", "+353 20 914 1775", "colinhorton@amce.com", new string[] { employeeRoleName });
+                await CreateEmployeeWithManagerAsync("Password.1", 2013, "Darrel", "Weber", "darrelweber@acme.com", "+36 55 615 463", "colinhorton@amce.com", new string[] { employeeRoleName });
+
+                //Support Team
+                await CreateEmployeeWithManagerAsync("Password.1", 1005, "Charlotte", "Osborne", "charlotteosborne@acme.com", "+36 55 760 177", "miltoncoleman@amce.com", new string[] { employeeRoleName });
+                await CreateEmployeeWithManagerAsync("Password.1", 1006, "Marie", "Walters", "mariewalters@acme.com", "+353 20 918 6908", "miltoncoleman@amce.com", new string[] { employeeRoleName });
+                await CreateEmployeeWithManagerAsync("Password.1", 1008, "Leonard", "Gill", "leonardgill@acme.com", "+36 55 525 585", "miltoncoleman@amce.com", new string[] { employeeRoleName });
+                await CreateEmployeeWithManagerAsync("Password.1", 1009, "Enrique", "Thomas", "enriquethomas@acme.com", "+353 20 916 1335", "miltoncoleman@amce.com", new string[] { employeeRoleName });
+                await CreateEmployeeWithManagerAsync("Password.1", 2010, "Omar", "Dunn", "omardunn@acme.com", "", "miltoncoleman@amce.com", new string[] { employeeRoleName });
+                await CreateEmployeeWithManagerAsync("Password.1", 1012, "Dewey", "George", "deweygeorge@acme.com", "+36 55 260 127", "miltoncoleman@amce.com", new string[] { employeeRoleName });
+                await CreateEmployeeWithManagerAsync("Password.1", 1013, "Rudy", "Lewis", "rudylewis@acme.com", "", "miltoncoleman@amce.com", new string[] { employeeRoleName });
+                await CreateEmployeeWithManagerAsync("Password.1", 1015, "Neal", "French", "nealfrench@acme.com", "+353 20 919 4882", "miltoncoleman@amce.com", new string[] { employeeRoleName });
 
             }
             if (!await _context.LeaveStatus.AnyAsync())
@@ -86,7 +114,7 @@ namespace LeaveSystem.Presentation
                 };
                 CreateLeaveStatus(leaveStatus);
             }
-            if(!await _context.PublicHoliday.AnyAsync())
+            if (!await _context.PublicHoliday.AnyAsync())
             {
                 var publicHoliday = GetPublicHolidays();
                 foreach (var item in publicHoliday)
@@ -112,29 +140,29 @@ namespace LeaveSystem.Presentation
             }
         }
 
-        private async Task<Employee> CreateUserAsync(string userName, string password, string firstName, string lastName, string email, string phoneNumber, string[] roles)
+        private async Task<Employee> CreateEmployeeAsync(string password, int employeeNumber, string firstName, string lastName, string email, string phoneNumber, string[] roles)
         {
             Employee applicationUser = new Employee
             {
-                UserName = userName,
                 FirstName = firstName,
                 LastName = lastName,
                 Email = email,
+                EmployeeNumber = employeeNumber,
                 PhoneNumber = phoneNumber,
                 EmailConfirmed = true,
                 IsEnabled = true,
                 CreatedDate = DateTime.Now.Date
             };
 
-            var result = await _employeeManager.CreateUserAsync(applicationUser, roles, password);
+            var result = await _employeeManager.CreateEmployeeAsync(applicationUser, roles, password);
 
             if (!result.Item1)
-                throw new Exception($"Seeding \"{userName}\" user failed. Errors: {string.Join(Environment.NewLine, result.Item2)}");
+                throw new Exception($"Seeding \"{email}\" user failed. Errors: {string.Join(Environment.NewLine, result.Item2)}");
 
 
             return applicationUser;
         }
-        private async Task CreateEmployeeWithManagerAsync(string userName, string password, string firstName, string lastName, string email, string phoneNumber, string managerEmail, string[] roles)
+        private async Task CreateEmployeeWithManagerAsync(string password, int employeeNumber, string firstName, string lastName, string email, string phoneNumber, string managerEmail, string[] roles)
         {
             //get the manager id
             var manager = _employeeManager.GetEmployeeByEmail(managerEmail);
@@ -142,10 +170,10 @@ namespace LeaveSystem.Presentation
             {
                 Employee applicationUser = new Employee
                 {
-                    UserName = userName,
                     FirstName = firstName,
                     LastName = lastName,
                     Email = email,
+                    EmployeeNumber = employeeNumber,
                     ManagerId = manager.Id,
                     PhoneNumber = phoneNumber,
                     EmailConfirmed = true,
@@ -153,10 +181,10 @@ namespace LeaveSystem.Presentation
                     CreatedDate = DateTime.Now.Date
                 };
 
-                var result = await _employeeManager.CreateUserAsync(applicationUser, roles, password);
+                var result = await _employeeManager.CreateEmployeeAsync(applicationUser, roles, password);
 
                 if (!result.Item1)
-                    throw new Exception($"Seeding \"{userName}\" user failed. Errors: {string.Join(Environment.NewLine, result.Item2)}");
+                    throw new Exception($"Seeding \"{email}\" user failed. Errors: {string.Join(Environment.NewLine, result.Item2)}");
 
             }
 

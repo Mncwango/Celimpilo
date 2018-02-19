@@ -36,7 +36,7 @@ namespace LeaveSystem.Presentation.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("EmployeeNumber");
+                    b.Property<int>("EmployeeNumber");
 
                     b.Property<string>("FirstName");
 
