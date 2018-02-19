@@ -67,62 +67,62 @@ namespace LeaveSystem.Business.Tests.Managers.EmployeeManager
             };
         }
 
-        [Test()]
-        public void ShouldGetEmployeeByGivenEmail()
-        {
+        //[Test()]
+        //public void ShouldGetEmployeeByGivenEmail()
+        //{
 
-            List<Employee> employeesList = new List<Employee>()
-            {
-                     new Employee
-                     {
-                       UserName = "admin",
-                       FirstName = "Inbuilt",
-                       LastName = "Administrator",
-                       Email = "admin@company1.com",
-                       PhoneNumber = "+1 (123) 000-0000",
-                       EmailConfirmed = true,
-                       IsEnabled = true,
-                       CreatedDate = DateTime.Now.Date
-                    },
-                  new Employee
-                  {
-                   UserName = "employee",
-                   FirstName = "Inbuilt",
-                   LastName = "Administrator",
-                   Email = "employee@company1.com",
-                   PhoneNumber = "+1 (123) 000-0000",
-                   EmailConfirmed = true,
-                   IsEnabled = true,
-                   CreatedDate = DateTime.Now.Date
-                  }
-            };
-            var expectedEmployee = new Employee
-            {
-                UserName = "admin",
-                FirstName = "Inbuilt",
-                LastName = "Administrator",
-                Email = "admin@company1.com",
-                PhoneNumber = "+1 (123) 000-0000",
-                EmailConfirmed = true,
-                IsEnabled = true,
-                CreatedDate = DateTime.Now.Date
-            };
+        //    List<Employee> employeesList = new List<Employee>()
+        //    {
+        //             new Employee
+        //             {
+        //               UserName = "admin",
+        //               FirstName = "Inbuilt",
+        //               LastName = "Administrator",
+        //               Email = "admin@company1.com",
+        //               PhoneNumber = "+1 (123) 000-0000",
+        //               EmailConfirmed = true,
+        //               IsEnabled = true,
+        //               CreatedDate = DateTime.Now.Date
+        //            },
+        //          new Employee
+        //          {
+        //           UserName = "employee",
+        //           FirstName = "Inbuilt",
+        //           LastName = "Administrator",
+        //           Email = "employee@company1.com",
+        //           PhoneNumber = "+1 (123) 000-0000",
+        //           EmailConfirmed = true,
+        //           IsEnabled = true,
+        //           CreatedDate = DateTime.Now.Date
+        //          }
+        //    };
+        //    var expectedEmployee = new Employee
+        //    {
+        //        UserName = "admin",
+        //        FirstName = "Inbuilt",
+        //        LastName = "Administrator",
+        //        Email = "admin@company1.com",
+        //        PhoneNumber = "+1 (123) 000-0000",
+        //        EmailConfirmed = true,
+        //        IsEnabled = true,
+        //        CreatedDate = DateTime.Now.Date
+        //    };
 
-            //_emailStoreMock.Setup(x => x.FindByEmailAsync(It.IsAny<string>(), It.IsAny<System.Threading.CancellationToken>())).Returns(Task.FromResult(employee));
-            uowMock.Setup(x => x.Employees.GetWhere(It.IsAny<Expression<Func<Employee, bool>>>())).Returns(employeesList.AsQueryable());
+        //    //_emailStoreMock.Setup(x => x.FindByEmailAsync(It.IsAny<string>(), It.IsAny<System.Threading.CancellationToken>())).Returns(Task.FromResult(employee));
+        //    uowMock.Setup(x => x.Employees.GetWhere(It.IsAny<Expression<Func<Employee, bool>>>())).Returns(employeesList.AsQueryable());
 
-            var manager = new LeaveSystem.Business.EmployeeManager(_employeeManager, _roleManager, uowMock.Object);
-            var results = manager.GetEmployeeByEmail("admin@company1.com");
-            Assert.That(expectedEmployee.Email, Is.EqualTo(results.Email));
-        }
-        [Test]
-        public void ShouldReturnNullEmployeeWhenGivenEmailDoesNotExist()
-        {
-            uowMock.Setup(x => x.Employees.GetWhere(It.IsAny<Expression<Func<Employee, bool>>>())).Returns(new List<Employee>().AsQueryable());
-            var manager = new LeaveSystem.Business.EmployeeManager(_employeeManager, _roleManager, uowMock.Object);
-            var results = manager.GetEmployeeByEmail("admin@company1.com");
-            Assert.IsNull(results);
-        }
+        //    var manager = new LeaveSystem.Business.EmployeeManager(_employeeManager, _roleManager, uowMock.Object);
+        //    var results = manager.GetEmployeeByEmail("admin@company1.com");
+        //    Assert.That(expectedEmployee.Email, Is.EqualTo(results.Email));
+        //}
+        //[Test]
+        //public void ShouldReturnNullEmployeeWhenGivenEmailDoesNotExist()
+        //{
+        //    uowMock.Setup(x => x.Employees.GetWhere(It.IsAny<Expression<Func<Employee, bool>>>())).Returns(new List<Employee>().AsQueryable());
+        //    var manager = new LeaveSystem.Business.EmployeeManager(_employeeManager, _roleManager, uowMock.Object);
+        //    var results = manager.GetEmployeeByEmail("admin@company1.com");
+        //    Assert.IsNull(results);
+        //}
         [Test]
         public async Task ShouldFindFindEmployeeByGivenIdAsync()
         {
