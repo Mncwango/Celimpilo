@@ -31,17 +31,6 @@ Admin
 User Name: admin@company1.com
 Password: Password.1
 ```
-Manager
-
-```
-User Name: manager@company1.com
-Password: Password.1
-```
-Employee
-```
-User Name: employee@company1.com
-Password: Password.1
-```
 
 ## Built With
 
