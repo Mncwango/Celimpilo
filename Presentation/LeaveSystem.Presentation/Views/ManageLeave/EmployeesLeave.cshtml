@@ -37,7 +37,7 @@
         @foreach (var leave in Model)
         {
             <tr>
-                <td>@_employeeManager.GetUserByIdAsync(leave.EmployeeId).Result.FirstName.ToString()</td>
+                <td>@_employeeManager.GetEmployeeByIdAsync(leave.EmployeeId).Result.FirstName.ToString()</td>
                 <td>@leave.Reason</td>
                 <td>@leave.FromDate.ToString("dd MMM yyyy")</td>
                 <td>@leave.ToDate.ToString("dd MMM yyyy")</td>

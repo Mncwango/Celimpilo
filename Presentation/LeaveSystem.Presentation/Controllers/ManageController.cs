@@ -48,10 +48,10 @@ namespace LeaveSystem.Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var user = await _employeeManager.GetUserByUserNameAsync(User.Identity.Name);
+            var user = await _employeeManager.GetEmployeeByUserNameAsync(User.Identity.Name);
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load user with ID '{_employeeManager.GetUserByUserNameAsync(User.Identity.Name)}'.");
+                throw new ApplicationException($"Unable to load user with ID '{_employeeManager.GetEmployeeByUserNameAsync(User.Identity.Name)}'.");
             }
 
             var model = new IndexViewModel
@@ -75,10 +75,10 @@ namespace LeaveSystem.Presentation.Controllers
                 return View(model);
             }
 
-            var user = await _employeeManager.GetUserByUserNameAsync(User.Identity.Name);
+            var user = await _employeeManager.GetEmployeeByUserNameAsync(User.Identity.Name);
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load user with ID '{await _employeeManager.GetUserByUserNameAsync(User.Identity.Name)}'.");
+                throw new ApplicationException($"Unable to load user with ID '{await _employeeManager.GetEmployeeByUserNameAsync(User.Identity.Name)}'.");
             }
 
             StatusMessage = "Your profile has been updated";
@@ -89,10 +89,10 @@ namespace LeaveSystem.Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> ChangePassword()
         {
-            var user = await _employeeManager.GetUserByUserNameAsync(User.Identity.Name);
+            var user = await _employeeManager.GetEmployeeByUserNameAsync(User.Identity.Name);
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load user with ID '{await _employeeManager.GetUserByUserNameAsync(User.Identity.Name)}'.");
+                throw new ApplicationException($"Unable to load user with ID '{await _employeeManager.GetEmployeeByUserNameAsync(User.Identity.Name)}'.");
             }
 
             var hasPassword = await _employeeManager.HasPasswordAsync(user);
@@ -114,10 +114,10 @@ namespace LeaveSystem.Presentation.Controllers
                 return View(model);
             }
 
-            var user = await _employeeManager.GetUserByUserNameAsync(User.Identity.Name);
+            var user = await _employeeManager.GetEmployeeByUserNameAsync(User.Identity.Name);
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load user with ID '{await _employeeManager.GetUserByUserNameAsync(User.Identity.Name)}'.");
+                throw new ApplicationException($"Unable to load user with ID '{await _employeeManager.GetEmployeeByUserNameAsync(User.Identity.Name)}'.");
             }
 
             var changePasswordResult = await _employeeManager.UpdatePasswordAsync(user, model.OldPassword, model.NewPassword);
@@ -137,10 +137,10 @@ namespace LeaveSystem.Presentation.Controllers
         [HttpGet]
         public async Task<IActionResult> SetPassword()
         {
-            var user = await _employeeManager.GetUserByUserNameAsync(User.Identity.Name);
+            var user = await _employeeManager.GetEmployeeByUserNameAsync(User.Identity.Name);
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load user with ID '{await _employeeManager.GetUserByUserNameAsync(User.Identity.Name)}'.");
+                throw new ApplicationException($"Unable to load user with ID '{await _employeeManager.GetEmployeeByUserNameAsync(User.Identity.Name)}'.");
             }
 
             var hasPassword = await _employeeManager.HasPasswordAsync(user);
@@ -163,10 +163,10 @@ namespace LeaveSystem.Presentation.Controllers
                 return View(model);
             }
 
-            var user = await _employeeManager.GetUserByUserNameAsync(User.Identity.Name);
+            var user = await _employeeManager.GetEmployeeByUserNameAsync(User.Identity.Name);
             if (user == null)
             {
-                throw new ApplicationException($"Unable to load user with ID '{await _employeeManager.GetUserByUserNameAsync(User.Identity.Name)}'.");
+                throw new ApplicationException($"Unable to load user with ID '{await _employeeManager.GetEmployeeByUserNameAsync(User.Identity.Name)}'.");
             }
 
             var addPasswordResult = await _employeeManager.ResetPasswordAsync(user, model.NewPassword);

@@ -50,7 +50,7 @@ namespace LeaveSystem.Presentation.Test
 
             leaveManagerMock.Setup(x => x.GetLeaveByEmployeeId(It.IsAny<string>()))
                 .Returns(value: new List<Leave>());
-            employeeManagerMock.Setup(x => x.GetUserByUserNameAsync(It.IsAny<string>()))
+            employeeManagerMock.Setup(x => x.GetEmployeeByUserNameAsync(It.IsAny<string>()))
                 .Returns(Task.FromResult(new Employee() { Id = Guid.NewGuid().ToString() }));
             var controller = new LeaveController(leaveManagerMock.Object, employeeManagerMock.Object);
             controller.ControllerContext.HttpContext = _contextMock.Object;
@@ -77,7 +77,7 @@ namespace LeaveSystem.Presentation.Test
                 ToDate = DateTime.Now.AddDays(2).Date,
                 Reason = "No Reason"
             };
-            employeeManagerMock.Setup(x => x.GetUserByUserNameAsync(It.IsAny<string>()))
+            employeeManagerMock.Setup(x => x.GetEmployeeByUserNameAsync(It.IsAny<string>()))
                 .Returns(Task.FromResult(new Employee() { Id = Guid.NewGuid().ToString() }));
 
             leaveManagerMock.Setup(x => x.AddLeave(It.IsAny<Leave>()))
@@ -99,7 +99,7 @@ namespace LeaveSystem.Presentation.Test
                 Reason = "No Reason",
                 StatusId = (int)LeaveStatusEnum.Pending
             };
-            employeeManagerMock.Setup(x => x.GetUserByUserNameAsync(It.IsAny<string>()))
+            employeeManagerMock.Setup(x => x.GetEmployeeByUserNameAsync(It.IsAny<string>()))
                 .Returns(Task.FromResult(new Employee() { Id = Guid.NewGuid().ToString() }));
 
             leaveManagerMock.Setup(x => x.UpdateLeave(It.IsAny<Leave>()))

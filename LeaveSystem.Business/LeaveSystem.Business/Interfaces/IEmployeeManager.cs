@@ -14,10 +14,10 @@ namespace LeaveSystem.Business
         Task<Tuple<bool, string[]>> CreateRoleAsync(Role role, IEnumerable<string> claims);
         Task<Tuple<bool, string[]>> CreateEmployeeAsync(Employee user, IEnumerable<string> roles, string password);
         Task<Role> GetRoleByNameAsync(string roleName);
-        Tuple<Employee, string[]> GetUserAndRolesAsync(string userId);
+        Tuple<Employee, string[]> GetEmployeeAndRolesAsync(string userId);
         Employee GetEmployeeByEmail(string email);
-        Task<Employee> GetUserByIdAsync(string userId);
-        Task<Employee> GetUserByUserNameAsync(string userName);
+        Task<Employee> GetEmployeeByIdAsync(string userId);
+        Task<Employee> GetEmployeeByUserNameAsync(string userName);
         List<string> GetEmployeeRoles(Employee user);
         Task<Tuple<bool, string[]>> ResetPasswordAsync(Employee user, string newPassword);
         Task<Tuple<bool, string[]>> UpdatePasswordAsync(Employee user, string currentPassword, string newPassword);

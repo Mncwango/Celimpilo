@@ -10,7 +10,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @await UserManager.GetUserByUserNameAsync(User.Identity.Name)!</a>
+                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @await UserManager.GetEmployeeByUserNameAsync(User.Identity.Name)!</a>
             </li>
             <li>
                 <button type="submit" class="btn btn-link navbar-btn navbar-link">Log out</button>

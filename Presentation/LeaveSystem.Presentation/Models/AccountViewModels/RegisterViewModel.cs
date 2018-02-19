@@ -24,7 +24,7 @@ namespace LeaveSystem.Presentation.Models.AccountViewModels
         [DataType(DataType.PhoneNumber)]
         [Display(Name ="Phone Number")]
         [StringLength(10,ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 10)]
-        public string CellPhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
         [Required]
         [EmailAddress]

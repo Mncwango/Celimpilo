@@ -121,7 +121,7 @@ namespace LeaveSystem.Presentation.Controllers
                 
                 if (IsManager)
                 {
-                    var manager = await _employeeManager.GetUserByUserNameAsync(User.Identity.Name);
+                    var manager = await _employeeManager.GetEmployeeByUserNameAsync(User.Identity.Name);
                     employee.ManagerId = manager.Id;
                 }
                 var result = await _employeeManager.CreateEmployeeAsync(employee, new string[] { roleName }, model.Password);

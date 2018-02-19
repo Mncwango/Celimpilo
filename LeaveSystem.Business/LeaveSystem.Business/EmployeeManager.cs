@@ -32,12 +32,12 @@ namespace LeaveSystem.Business
             return await _employeeManager.HasPasswordAsync(employee);
         }
 
-        public async Task<Employee> GetUserByIdAsync(string userId)
+        public async Task<Employee> GetEmployeeByIdAsync(string userId)
         {
             return await _employeeManager.FindByIdAsync(userId);
         }
 
-        public async Task<Employee> GetUserByUserNameAsync(string userName)
+        public async Task<Employee> GetEmployeeByUserNameAsync(string userName)
         {
             return await _employeeManager.FindByNameAsync(userName);
         }
@@ -56,7 +56,7 @@ namespace LeaveSystem.Business
             return userRoleNames;
         }
 
-        public Tuple<Employee, string[]> GetUserAndRolesAsync(string userId)
+        public Tuple<Employee, string[]> GetEmployeeAndRolesAsync(string userId)
         {
             var user = _unitOfWork.Employees
                 .GetAllIncluding(e => e.Id == userId, r => r.Roles)

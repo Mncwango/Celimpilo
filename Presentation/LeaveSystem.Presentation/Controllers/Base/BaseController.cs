@@ -22,7 +22,7 @@ namespace LeaveSystem.Presentation.Controllers.Base
         {
             get
             {
-                return _employeeManager.GetUserByUserNameAsync(User.Identity.Name).Result;
+                return _employeeManager.GetEmployeeByUserNameAsync(User.Identity.Name).Result;
             }
         }
  
