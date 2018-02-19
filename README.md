@@ -28,7 +28,7 @@ Update-Database
 
 Admin
 ```
-User Name: dmin@company1.com
+User Name: admin@company1.com
 Password: Password.1
 ```
 Manager

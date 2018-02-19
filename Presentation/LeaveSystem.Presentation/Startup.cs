@@ -31,8 +31,8 @@ namespace LeaveSystem.Presentation
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),b=> b.MigrationsAssembly("LeaveSystem.Presentation")));
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("AzureDbConnection"), b => b.MigrationsAssembly("LeaveSystem.Presentation")));
 
             services.AddIdentity<Employee, Role>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -42,7 +42,7 @@ namespace LeaveSystem.Presentation
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IEmployeeManager, EmployeeManager>();
             services.AddScoped<ILeaveManager, LeaveManager>();
-            services.AddScoped<IPublicHolidaysManager,PublicHolidaysManager>();
+            services.AddScoped<IPublicHolidaysManager, PublicHolidaysManager>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
@@ -63,7 +63,7 @@ namespace LeaveSystem.Presentation
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Leave/Error");
             }
 
             app.UseStaticFiles();
@@ -74,7 +74,7 @@ namespace LeaveSystem.Presentation
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Leave}/{action=Index}/{id?}");
             });
         }
     }

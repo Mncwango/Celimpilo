@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -8,6 +9,7 @@ using LeaveSystem.Business.Interfaces;
 using LeaveSystem.Data.Model;
 using LeaveSystem.Infrastructure;
 using LeaveSystem.Presentation.Controllers.Base;
+using LeaveSystem.Presentation.Models;
 using LeaveSystem.Presentation.Models.ManageLeaveViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,7 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LeaveSystem.Presentation.Controllers
 {
-    [Authorize(Roles ="manager,employee")]
+    [Authorize]
     public class LeaveController : BaseController
     {
         private readonly ILeaveManager leaveManager;
@@ -26,14 +28,17 @@ namespace LeaveSystem.Presentation.Controllers
             this.leaveManager = leaveManager;
             this.employeeManager = employeeManager;
         }
+        [Authorize]
         public IActionResult Index()
         {
+            
             var leaves = leaveManager.GetLeaveByEmployeeId(currentEmployee.Id).ToList();
             var results = Mapper.Map<List<Leave>, List<LeaveViewModel>>(leaves);
             return View(results);
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult AddLeave()
         {
             return View();
@@ -41,6 +46,7 @@ namespace LeaveSystem.Presentation.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public IActionResult AddLeave(CreateLeaveViewModel leaveViewModel)
         {
             if (ModelState.IsValid)
@@ -60,6 +66,7 @@ namespace LeaveSystem.Presentation.Controllers
             return View(leaveViewModel);
         }
         [HttpPost]
+        [Authorize]
         public IActionResult EditLeave(UpdateLeaveViewModel model)
         {
             if (ModelState.IsValid)
@@ -98,6 +105,11 @@ namespace LeaveSystem.Presentation.Controllers
             var leave = leaveManager.GetLeaveById(leaveId);
             var leaveModel = Mapper.Map<Leave, LeaveViewModel>(leave);
             return View(leaveModel);
+        }
+
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
         private void AddErrors(IEnumerable<string> result)

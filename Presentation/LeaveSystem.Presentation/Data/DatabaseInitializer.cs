@@ -44,7 +44,7 @@ namespace LeaveSystem.Presentation
         }
         public async Task Seed()
         {
-            await _context.Database.MigrateAsync().ConfigureAwait(false);
+            //await _context.Database.MigrateAsync().ConfigureAwait(false);
 
             if (!await _context.Users.AnyAsync())
             {

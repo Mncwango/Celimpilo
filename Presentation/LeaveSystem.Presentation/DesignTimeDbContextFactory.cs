@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using LeaveSystem.Data;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +27,8 @@ namespace LeaveSystem.Presentation
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
             builder.UseSqlServer(configuration["ConnectionStrings:DefaultConnection"], b => b.MigrationsAssembly("LeaveSystem.Presentation"));
-            
+
+
 
             return new ApplicationDbContext(builder.Options);
         }
